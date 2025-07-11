@@ -4,7 +4,7 @@ const rentalSchema = new mongoose.Schema({
   userId: { type: String, required: true },
   rentalName: { type: String, required: true, maxlength: 30 },
   beds: { type: Number, required: true },
-  description: { type: String, required: true },
+  description: { type: String, required: true, maxlength: 250 },
   petsOption: { type: String, enum: ["autorisé", "interdit"], required: true },
   smokingOption: {
     type: String,
