@@ -1,4 +1,4 @@
-import UserRepository from "./users.repository.js";
+import userRepository from "./users.repository.js";
 
 class UserService {
   constructor(userRepository) {
@@ -6,25 +6,25 @@ class UserService {
     console.info("UserService initialized with repository");
   }
 
-  async getUsers() {
+  async getAllUsers() {
     return await this.userRepository.getAllUsers();
   }
 
-  async getUser(id) {
+  async getUserById(id) {
     return await this.userRepository.getUserById(id);
   }
 
-  async addUser(userData) {
+  async createUser(userData) {
     return await this.userRepository.createUser(userData);
   }
 
-  async modifyUser(id, updateData) {
+  async updateUser(id, updateData) {
     return await this.userRepository.updateUser(id, updateData);
   }
 
-  async removeUser(id) {
+  async deleteUser(id) {
     return await this.userRepository.deleteUser(id);
   }
 }
 
-export default new UserService(UserRepository);
+export default new UserService(userRepository);

@@ -1,4 +1,4 @@
-import RentalRepository from "./rentals.repository.js";
+import rentalRepository from "./rentals.repository.js";
 
 class RentalService {
   constructor(rentalRepository) {
@@ -7,24 +7,24 @@ class RentalService {
   }
 
   async createRental(data) {
-    return await this.rentalRepository.create(data);
+    return await this.rentalRepository.createRental(data);
   }
 
   async getAllRentals() {
-    return await this.rentalRepository.findAll();
+    return await this.rentalRepository.getAllRentals();
   }
 
   async getRentalById(id) {
-    return await this.rentalRepository.findById(id);
+    return await this.rentalRepository.getRentalById(id);
   }
 
   async updateRental(id, data) {
-    return await this.rentalRepository.updateById(id, data);
+    return await this.rentalRepository.updateRental(id, data);
   }
 
   async deleteRental(id) {
-    return await this.rentalRepository.deleteById(id);
+    return await this.rentalRepository.deleteRental(id);
   }
 }
 
-export default new RentalService(RentalRepository);
+export default new RentalService(rentalRepository);

@@ -25,4 +25,6 @@ const rentalSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Rental", rentalSchema);
+const Rental = mongoose.model("Rental", rentalSchema);
+
+export default Rental;
