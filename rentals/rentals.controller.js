@@ -1,12 +1,6 @@
 import fs from "fs";
 import cloudinary from "../config/Cloudinary.js";
-import {
-  createRental,
-  getAllRentals,
-  getRentalById,
-  updateRental,
-  deleteRental,
-} from "../rentals/rentals.service.js";
+import RentalService from "./rentals.service.js";
 
 const postRental = async (req, res) => {
   try {
@@ -27,7 +21,7 @@ const postRental = async (req, res) => {
       images: imageUrls,
     };
 
-    const rental = await createRental(rentalData);
+    const rental = await RentalService.createRental(rentalData);
     res.status(201).json(rental);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -36,7 +30,7 @@ const postRental = async (req, res) => {
 
 const getRentals = async (req, res) => {
   try {
-    const rentals = await getAllRentals();
+    const rentals = await RentalService.getAllRentals();
     res.status(200).json(rentals);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -45,7 +39,7 @@ const getRentals = async (req, res) => {
 
 const getRental = async (req, res) => {
   try {
-    const rental = await getRentalById(req.params.id);
+    const rental = await RentalService.getRentalById(req.params.id);
     if (!rental) return res.status(404).json({ error: "Location non trouvée" });
     res.status(200).json(rental);
   } catch (err) {
@@ -55,7 +49,7 @@ const getRental = async (req, res) => {
 
 const putRental = async (req, res) => {
   try {
-    const rental = await updateRental(req.params.id, req.body);
+    const rental = await RentalService.updateRental(req.params.id, req.body);
     if (!rental) return res.status(404).json({ error: "Location non trouvée" });
     res.status(200).json(rental);
   } catch (err) {
@@ -65,7 +59,7 @@ const putRental = async (req, res) => {
 
 const removeRental = async (req, res) => {
   try {
-    const rental = await deleteRental(req.params.id);
+    const rental = await RentalService.deleteRental(req.params.id);
     if (!rental) return res.status(404).json({ error: "Location non trouvée" });
     res.status(200).json({ message: "Location supprimée" });
   } catch (err) {

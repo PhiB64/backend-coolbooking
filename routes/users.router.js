@@ -1,22 +1,14 @@
 import express from "express";
 import multer from "multer";
-import {
-  createUserController,
-  deleteUserController,
-  getAllUsersController,
-  getUserByIdController,
-  updateUserController,
-} from "../users/users.controller.js";
+import usersController from "../users/users.controller.js";
 
 const router = express.Router();
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ dest: "uploads/" }); // stockage temporaire
 
-const cloudinaryFields = [{ name: "avatar", maxCount: 1 }];
-
-router.post("/", upload.fields(cloudinaryFields), createUserController);
-router.get("/", getAllUsersController);
-router.get("/:id", getUserByIdController);
-router.put("/:id", updateUserController);
-router.delete("/:id", deleteUserController);
+router.get("/", usersController.getUsers);
+router.get("/:id", usersController.getUser);
+router.post("/", upload.single("avatar"), usersController.addUser);
+router.put("/:id", usersController.modifyUser);
+router.delete("/:id", usersController.removeUser);
 
 export default router;

@@ -1,21 +1,30 @@
-import Rental from "../rentals/rentals.model.js";
+import RentalRepository from "./rentals.repository.js";
 
-export const createRental = async (data) => {
-  return await Rental.create(data);
-};
+class RentalService {
+  constructor(rentalRepository) {
+    this.rentalRepository = rentalRepository;
+    console.info("RentalService initialized with repository");
+  }
 
-export const getAllRentals = async () => {
-  return await Rental.find();
-};
+  async createRental(data) {
+    return await this.rentalRepository.create(data);
+  }
 
-export const getRentalById = async (id) => {
-  return await Rental.findById(id);
-};
+  async getAllRentals() {
+    return await this.rentalRepository.findAll();
+  }
 
-export const updateRental = async (id, data) => {
-  return await Rental.findByIdAndUpdate(id, data, { new: true });
-};
+  async getRentalById(id) {
+    return await this.rentalRepository.findById(id);
+  }
 
-export const deleteRental = async (id) => {
-  return await Rental.findByIdAndDelete(id);
-};
+  async updateRental(id, data) {
+    return await this.rentalRepository.updateById(id, data);
+  }
+
+  async deleteRental(id) {
+    return await this.rentalRepository.deleteById(id);
+  }
+}
+
+export default new RentalService(RentalRepository);
