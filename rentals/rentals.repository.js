@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Rental from "./rentals.model.js";
+import Rental from "../models/rentals.model.js";
 
 class RentalRepository {
   async createRental(data) {

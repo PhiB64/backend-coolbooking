@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Rental from "../rentals/rentals.model.js";
+import Rental from "./rentals.model.js";
 
 const userSchema = new mongoose.Schema({
   avatar: { type: String, required: true },

@@ -1,4 +1,4 @@
-import User from "./users.model.js";
+import User from "../models/users.model.js";
 const validRoles = ["owner", "tenant"];
 
 class UserRepository {
