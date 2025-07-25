@@ -3,27 +3,29 @@ const validRoles = ["owner", "tenant"];
 
 class UserRepository {
   async getAllUsers() {
-    return await User.find();
+    return await User.find().select("-password");
   }
 
   async getUserById(id) {
-    return await User.findById(id);
+    return await User.findById(id).select("-password");
   }
 
   async createUser({ avatar, role, name, firstname, phone, email, password }) {
     const existing = await User.findOne({ email });
     if (existing) throw new Error("Email déjà utilisé");
-    if (role && !validRoles.includes(role)) throw new Error("Rôle invalide");
+
+    const rolesArray = Array.isArray(role) ? role : [role];
 
     const newUser = new User({
       avatar,
-      role,
+      role: rolesArray, // tableau de rôles
       name,
       firstname,
       phone,
       email,
       password,
     });
+
     return newUser.save();
   }
 

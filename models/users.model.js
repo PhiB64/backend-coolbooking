@@ -2,11 +2,15 @@ import mongoose from "mongoose";
 import Rental from "./rentals.model.js";
 
 const userSchema = new mongoose.Schema({
-  avatar: { type: String, required: true },
-  role: { type: String, required: true, enum: ["owner", "tenant"] },
+  avatar: { type: String },
+  role: {
+    type: [String], // ← tableau de rôles
+    enum: ["owner", "tenant"],
+    default: [],
+  },
   name: { type: String, required: true },
   firstname: { type: String, required: true },
-  phone: { type: String, required: true },
+  phone: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
