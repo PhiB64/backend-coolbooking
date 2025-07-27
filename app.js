@@ -25,6 +25,11 @@ app.use("/users", users_router);
 
 app.use("/rentals", rentals_router);
 
+app.use((err, req, res, next) => {
+  console.error("Erreur attrapée :", err.message);
+  res.status(400).json({ message: err.message });
+});
+
 connectDB();
 
 app.listen(port, () => {

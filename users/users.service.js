@@ -19,7 +19,7 @@ class UserService {
     const hashedPassword = await argon2.hash(userData.password, {
       type: argon2.argon2id,
     });
-    console.log("Mot de passe hashé :", hashedPassword);
+
     const safeUser = {
       ...userData,
       password: hashedPassword,

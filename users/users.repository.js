@@ -14,11 +14,9 @@ class UserRepository {
     const existing = await User.findOne({ email });
     if (existing) throw new Error("Email déjà utilisé");
 
-    const rolesArray = Array.isArray(role) ? role : [role];
-
     const newUser = new User({
       avatar,
-      role: rolesArray, // tableau de rôles
+      role,
       name,
       firstname,
       phone,

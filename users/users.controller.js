@@ -1,6 +1,10 @@
 import userService from "./users.service.js";
-import cloudinary from ".././config/Cloudinary.js";
+import cloudinary from "../config/Cloudinary.js";
 import fs from "fs";
+import {
+  createUserSchema,
+  updateUserSchema,
+} from "../validation/users.validation.js";
 
 class UserController {
   constructor(userService) {
@@ -28,6 +32,10 @@ class UserController {
 
   async createUser(req, res, next) {
     try {
+      const { error } = createUserSchema.validate(req.body);
+      if (error)
+        throw new Error("Validation échouée : " + error.details[0].message);
+
       let avatarUrl;
 
       if (req.file) {
@@ -36,17 +44,16 @@ class UserController {
           transformation: [{ width: 300, height: 300, crop: "fill" }],
         });
         avatarUrl = result.secure_url;
-        fs.unlinkSync(req.file.path); // nettoyage du fichier local
+        fs.unlinkSync(req.file.path);
       } else {
         avatarUrl =
-          "https://res.cloudinary.com/dwkyezu2u/image/upload/v1745506223/download_zspjbi.png"; // avatar par defaut
+          "https://res.cloudinary.com/dwkyezu2u/image/upload/v1745506223/download_zspjbi.png";
       }
 
       const userData = {
         ...req.body,
         avatar: avatarUrl,
       };
-      console.log("Contenu du body :", req.body);
 
       const newUser = await userService.createUser(userData);
       res.status(201).json(newUser);
@@ -57,6 +64,10 @@ class UserController {
 
   async updateUser(req, res, next) {
     try {
+      const { error } = updateUserSchema.validate(req.body);
+      if (error)
+        throw new Error("Validation échouée : " + error.details[0].message);
+
       const updatedUser = await userService.updateUser(req.params.id, req.body);
       res.status(200).json(updatedUser);
     } catch (error) {
@@ -67,7 +78,7 @@ class UserController {
   async deleteUser(req, res, next) {
     try {
       await userService.deleteUser(req.params.id);
-      res.status(204).end(); // No content
+      res.status(204).end();
     } catch (error) {
       next(error);
     }
