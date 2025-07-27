@@ -24,8 +24,9 @@ async function verifyPassword(req, res) {
     res.cookie("token", token, { httpOnly: true });
     res.status(200).json({
       message: "Connexion réussie !",
-      role: user.role, // 'owner', 'tenant', les 2
+      role: user.role, // 'owner', 'tenant'
       firstname: user.firstname,
+      avatar: user.avatar,
     });
   } catch (err) {
     res.status(500).send("Erreur de connexion.");
