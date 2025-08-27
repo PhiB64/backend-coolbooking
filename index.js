@@ -25,18 +25,38 @@ app.use("/users", users_router);
 
 app.use("/rentals", rentals_router);
 
-app.get("/api/communes", async (req, res) => {
+app.get("/api/location", async (req, res) => {
   const { codePostal } = req.query;
+
+  if (!codePostal || !/^\d{5}$/.test(codePostal)) {
+    return res.status(400).json({ message: "Code postal invalide" });
+  }
+
   try {
-    const response = await fetch(
+    const communesRes = await fetch(
       `${process.env.GOUV}/communes?codePostal=${codePostal}&fields=nom,codeDepartement,region&format=json`
     );
-    const data = await response.json();
-    res.json(data);
+    const communes = await communesRes.json();
+
+    if (communes.length === 0) {
+      return res.status(404).json({ message: "Aucune commune trouvée" });
+    }
+
+    const codeDepartement = communes[0].codeDepartement;
+
+    const deptRes = await fetch(
+      `${process.env.GOUV}/departements/${codeDepartement}`
+    );
+    const departement = await deptRes.json();
+
+    res.json({
+      communes,
+      departement: departement.nom,
+      region: communes[0].region.nom,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Erreur lors de la récupération des communes" });
+    console.error("Erreur localisation combinée :", error.message);
+    res.status(500).json({ message: "Erreur serveur localisation" });
   }
 });
 
