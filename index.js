@@ -9,7 +9,7 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 app.use(
   cors({
@@ -25,6 +25,21 @@ app.use("/users", users_router);
 
 app.use("/rentals", rentals_router);
 
+app.get("/api/communes", async (req, res) => {
+  const { codePostal } = req.query;
+  try {
+    const response = await fetch(
+      `${process.env.GOUV}/communes?codePostal=${codePostal}&fields=nom,codeDepartement,region&format=json`
+    );
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Erreur lors de la récupération des communes" });
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error("Erreur attrapée :", err.message);
   res.status(400).json({ message: err.message });
@@ -33,5 +48,5 @@ app.use((err, req, res, next) => {
 connectDB();
 
 app.listen(port, () => {
-  console.log("localhost connected");
+  console.log(`Server running on port ${port}`);
 });
