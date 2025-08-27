@@ -13,7 +13,7 @@ const port = 3000;
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend
+    origin: process.env.FRONT, // frontend
     credentials: true, // autorise les cookies
   })
 );
