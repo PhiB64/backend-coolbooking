@@ -1,5 +1,5 @@
 import userService from "./users.service.js";
-import cloudinary from "../config/Cloudinary.js";
+import cloudinary from "../config/cloudinary.js";
 import fs from "fs";
 import {
   createUserSchema,
