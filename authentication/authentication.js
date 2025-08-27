@@ -21,10 +21,19 @@ async function verifyPassword(req, res) {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.cookie("token", token, { httpOnly: true });
+
+    const isProduction = process.env.NODE_ENV === "production";
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: isProduction ? "None" : "Lax",
+      secure: isProduction, // true uniquement en HTTPS
+      maxAge: 3600000,
+    });
+
     res.status(200).json({
       message: "Connexion réussie !",
-      role: user.role, // 'owner', 'tenant'
+      role: user.role,
       firstname: user.firstname,
       avatar: user.avatar,
     });

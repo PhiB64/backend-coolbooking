@@ -8,7 +8,7 @@ class RentalController {
     console.info("RentalController initialized with service");
   }
 
-  async postCreateRental(req, res) {
+  async createRental(req, res) {
     try {
       const imageUrls = {};
       const files = req.files;
@@ -25,6 +25,7 @@ class RentalController {
         ...req.body,
         beds: Number(req.body.beds),
         images: imageUrls,
+        owner: req.user._id, // Ajout de l'ID utilisateur
       };
 
       const rental = await rentalService.createRental(rentalData);

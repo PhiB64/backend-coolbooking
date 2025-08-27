@@ -1,21 +1,20 @@
 import mongoose from "mongoose";
 
 const rentalSchema = new mongoose.Schema({
-  userId: { type: String, required: true },
-  rentalName: { type: String, required: true, maxlength: 30 },
+  rentalName: { type: String, required: true, maxlength: 50 },
   beds: { type: Number, required: true },
   description: { type: String, required: true, maxlength: 250 },
-  petsOption: { type: String, enum: ["autorisé", "interdit"], required: true },
-  smokingOption: {
-    type: String,
-    enum: ["fumeur", "non fumeur"],
-    required: true,
-  },
+
+  petsForbidden: { type: Boolean, default: false },
+  nonSmoking: { type: Boolean, default: false },
+
   address: {
+    codePostal: { type: String, required: true, maxlength: 5 },
     region: { type: String, required: true, maxlength: 30 },
     department: { type: String, required: true, maxlength: 30 },
     city: { type: String, required: true, maxlength: 30 },
   },
+
   images: {
     image_1: { type: String, required: true },
     image_2: { type: String },

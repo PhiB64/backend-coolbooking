@@ -88,6 +88,4 @@ class UserController {
   };
 }
 
-console.log("userService:", userService);
-
 export default new UserController(userService);
