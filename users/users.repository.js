@@ -1,4 +1,5 @@
 import User from "../models/users.model.js";
+
 const validRoles = ["owner", "tenant"];
 
 class UserRepository {
@@ -10,14 +11,22 @@ class UserRepository {
     return await User.findById(id).select("-password");
   };
 
-  createUser = async ({ avatar, role, name, firstname, phone, email, password }) => {
+  createUser = async ({
+    avatar,
+    role,
+    lastname,
+    firstname,
+    phone,
+    email,
+    password,
+  }) => {
     const existing = await User.findOne({ email });
     if (existing) throw new Error("Email déjà utilisé");
 
     const newUser = new User({
       avatar,
       role,
-      name,
+      lastname,
       firstname,
       phone,
       email,
