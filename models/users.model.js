@@ -4,7 +4,7 @@ import Rental from "./rentals.model.js";
 const userSchema = new mongoose.Schema({
   avatar: { type: String },
   role: { type: String, enum: ["owner", "tenant"], required: true },
-  name: { type: String, required: true },
+  lastname: { type: String, required: true },
   firstname: { type: String, required: true },
   phone: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },

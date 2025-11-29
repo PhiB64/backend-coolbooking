@@ -3,6 +3,7 @@ import express from "express";
 import connectDB from "./config/MongoDB.js";
 import users_router from "./routes/users.router.js";
 import rentals_router from "./routes/rentals.router.js";
+import authentication_router from "./routes/authentication.router.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -32,6 +33,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Routes
+app.use("/auth", authentication_router);
 app.use("/users", users_router);
 app.use("/rentals", rentals_router);
 
