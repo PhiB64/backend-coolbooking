@@ -29,7 +29,13 @@ class UserService {
   };
 
   updateUser = async (id, updateData) => {
-    return await this.userRepository.updateUser(id, updateData);
+    const toUpdate = { ...updateData };
+    if (toUpdate.password) {
+      toUpdate.password = await argon2.hash(toUpdate.password, {
+        type: argon2.argon2id,
+      });
+    }
+    return await this.userRepository.updateUser(id, toUpdate);
   };
 
   deleteUser = async (id) => {

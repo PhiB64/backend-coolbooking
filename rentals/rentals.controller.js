@@ -8,7 +8,7 @@ class RentalController {
     console.info("RentalController initialized with service");
   }
 
-  async createRental(req, res) {
+  async createRental(req, res, next) {
     try {
       const imageUrls = {};
       const files = req.files;
@@ -31,49 +31,49 @@ class RentalController {
       const rental = await rentalService.createRental(rentalData);
       res.status(201).json(rental);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      next(err);
     }
   }
 
-  async getAllRentals(req, res) {
+  async getAllRentals(req, res, next) {
     try {
       const rentals = await rentalService.getAllRentals();
       res.status(200).json(rentals);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      next(err);
     }
   }
 
-  async getRentalById(req, res) {
+  async getRentalById(req, res, next) {
     try {
       const rental = await rentalService.getRentalById(req.params.id);
       if (!rental)
         return res.status(404).json({ error: "Location non trouvée" });
       res.status(200).json(rental);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      next(err);
     }
   }
 
-  async updateRental(req, res) {
+  async updateRental(req, res, next) {
     try {
       const rental = await rentalService.updateRental(req.params.id, req.body);
       if (!rental)
         return res.status(404).json({ error: "Location non trouvée" });
       res.status(200).json(rental);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      next(err);
     }
   }
 
-  async deleteRental(req, res) {
+  async deleteRental(req, res, next) {
     try {
       const rental = await rentalService.deleteRental(req.params.id);
       if (!rental)
         return res.status(404).json({ error: "Location non trouvée" });
       res.status(200).json({ message: "Location supprimée" });
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      next(err);
     }
   }
 }

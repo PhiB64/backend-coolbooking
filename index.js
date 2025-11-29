@@ -21,7 +21,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Origin not allowed by CORS"));
+        callback(new Error("Origine non autorisée par CORS"));
       }
     },
     credentials: true, // autorise cookies / headers d’auth

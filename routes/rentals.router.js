@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 import rentalController from "../rentals/rentals.controller.js";
-import { verifyToken } from "../authentication/authentication.js";
+import { verifyToken } from "../authentication/authentication.middleware.js";
 
 const router = express.Router();
 

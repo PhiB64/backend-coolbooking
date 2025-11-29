@@ -5,6 +5,8 @@ const rentalSchema = new mongoose.Schema({
   beds: { type: Number, required: true },
   description: { type: String, required: true, maxlength: 250 },
 
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+
   petsForbidden: { type: Boolean, default: false },
   nonSmoking: { type: Boolean, default: false },
 
